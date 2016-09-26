@@ -2,9 +2,11 @@
 
 if __name__ == "__main__":
 
-    f = open("data/write.txt","w")
+  f = open("data/write.txt","w")
 
-    f.write("Pythonでファイルに書き込みました！")
+  f.write("Pythonでファイルに書き込みました！")
 
-    f.close()
+  f.close()
 
+  print "aaa"
+  print "bbb"
