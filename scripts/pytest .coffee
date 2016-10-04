@@ -8,8 +8,8 @@ module.exports = (robot) ->
 
 
 get_temperature = (msg) ->
-
-    child_process.exec "python python/test.py", (error, stdout, stderr) ->
+    #python/test.py
+    child_process.exec "python python/gas_home1.py", (error, stdout, stderr) ->
       if !error
         try
           msg.reply stdout
