@@ -3,6 +3,7 @@
 import urllib2
 import os
 import json
+import sys
 
 def getAuth():
   cs=""
@@ -28,16 +29,15 @@ def getAuth():
   return json.loads(r)
 
 
-def setgae(inj):
+def setgae(inj,func,parameter):
   auth=inj["access_token"]
   auth="Bearer "+auth
-  func=""
+
   sheetid=""
   apiid=""
 
+
   for k, v in os.environ.items():
-    if k=="GAS_FC":
-      func=v
     if k=="GAS_PARAMETER_SHEET":
       sheetid=v
     if k=="GAS_APIID_HOME":
@@ -50,7 +50,7 @@ def setgae(inj):
 
   jsonb={}
   jsonb["function"]=func
-  jsonb["parameters"]=[sheetid]
+  jsonb["parameters"]=parameter
   jsonb["devMode"]="true"
 
   encodeJson = json.dumps(jsonb, indent=4)
@@ -58,11 +58,30 @@ def setgae(inj):
   req = urllib2.Request(url,encodeJson,headers)
   res = urllib2.urlopen(req)
   r = res.read()
-  print r
+  return r
 
 def main():
+
+  inpar=sys.argv
+  sheetid=""
+  for k, v in os.environ.items():
+    if k=="GAS_PARAMETER_SHEET":
+      sheetid=v
+
+  #アクセストークンの取得
   aut=getAuth()
-  setgae(aut)
+
+  #API呼び出し
+  if inpar[1]=="getTest1":
+    ret=setgae(aut,inpar[1],[sheetid,inpar[2]])
+    data=json.loads(ret)
+    if data["response"]["result"]["resp"]=="OK":
+      print data["response"]["result"]["message"]
+
+  else:
+    print "no method"
+
+  
 
 if __name__ == '__main__':
   main()
