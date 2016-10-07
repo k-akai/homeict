@@ -13,6 +13,15 @@ share.money=function(p){
 
 share.lineO=84;
 
+share.nMap=function(p){
+  if(p=="k.akai"){
+     return "かず";
+  }else if(p=="a.miyuki"){
+     return "みゆき";
+  }else{
+     return null;
+  }
+}
 share.pMap=function(p){
   if(p=="食費"){
      return "G51";
