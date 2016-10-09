@@ -76,20 +76,29 @@ def main():
   if inpar[1]=="getTest":
     ret=setgae(aut,inpar[1],[sheetid,inpar[2]])
     data=json.loads(ret)
-    if data["response"]["result"]["resp"]=="OK":
-      print data["response"]["result"]["message"]
+    print data["response"]["result"]["message"]
   elif inpar[1]=="setTest1":
     ret=setgae(aut,inpar[1],[sheetid,inpar[2],inpar[3],inpar[4],inpar[5],inpar[6],inpar[7]])
     data=json.loads(ret)
     if data["response"]["result"]["resp"]=="OK":
       if inpar[6]=="2":
-        """
-        """
         print str(data["response"]["result"]["message"])+":行目に現金として追加しました"
       else:
         print str(data["response"]["result"]["message"])+"：行目にクレジットとして追加しました"
-  elif inpar[1]=="setTestx":
-    print inpar[2]
+    else:
+      print "error"+str(data["response"]["result"]["message"])
+  elif inpar[1]=="setIncome":
+    ret=setgae(aut,inpar[1],[sheetid,inpar[2],inpar[3],inpar[4]])
+    data=json.loads(ret)
+    if data["response"]["result"]["resp"]=="OK":
+      print str(data["response"]["result"]["message"])+":行目に入金追加しました"
+  elif inpar[1]=="delete1":
+    ret=setgae(aut,inpar[1],[sheetid,inpar[3],inpar[2]])
+    data=json.loads(ret)
+    if data["response"]["result"]["resp"]=="OK":
+      print str(data["response"]["result"]["message"])+":行目を削除しました"
+    else:
+      print "削除に失敗しました"
   else:
     print "no method"
 

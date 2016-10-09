@@ -6,10 +6,26 @@ share.money=function(p){
      return "2";
   }else if(p=="みゆき"){
      return "2";
-  }else{
+  }else if(p=="現金"){
+	return "2";
+  }else if(p=="クレジット"){
+	return "8";  	
+  }
+  else{
      return "8";
   }
 }
+
+share.inMoney=function(p){
+  //入金のところの列の設定
+  if(p=="かず"){
+     return "68";
+  }else{
+     return "75";
+  }
+}
+//入金のところの行
+share.inMoneyCol="6";
 
 share.lineO=84;
 
