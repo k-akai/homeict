@@ -20,8 +20,14 @@ module.exports = function(robot) {
         msg.reply("その項目は未実装です");
 　　  　　　　return;
       }
-　　  　　var execS="python python/gas_home2.py getTest "+val;
-      execser(execS,msg);
+	  if (word[1]=="食費生活費"){
+		 var execS="python python/gas_home2.py get2col2 "+val;
+		 execser(execS,msg);
+	  }else{
+　　  　　var execS="python python/gas_home2.py get2col "+val;
+        execser(execS,msg);
+      }
+     
 
 　   }else if (word.length==5){
       //登録を実施 

@@ -4,6 +4,8 @@ import urllib2
 import os
 import json
 import sys
+import datetime
+
 
 def getAuth():
   cs=""
@@ -60,10 +62,24 @@ def setgae(inj,func,parameter):
   res = urllib2.urlopen(req)
   r = res.read()
   return r
-
-
+def makeRes1(data):
+  yosan=int(data["response"]["result"]["yosan"])
+  syouka=int(data["response"]["result"]["syouka"])
+  today = datetime.datetime.today()
+  day=int(today.day) 
+  #今月が何日あるか
+  next_month =datetime.date(today.year, today.month % 12 + 1, 1)
+  last_day= next_month - datetime.timedelta(days=1)
+  last_day=int(last_day.day)
+  zan=float(syouka)/yosan
+  zan=1-zan
+  zanday=float(day)/float(last_day)
+  print "予算:"+str(yosan)+",残額:"+str(syouka)+",消費率:"+str(zan)+",(日数率:"+str(zanday)+")"
+  if(zanday<zan):
+      print "赤字傾向です"
+  else:
+      print "黒字傾向です"
 def main():
-
   inpar=sys.argv
   sheetid=""
   for k, v in os.environ.items():
@@ -73,10 +89,16 @@ def main():
   #アクセストークンの取得
   aut=getAuth()
 
-  if inpar[1]=="getTest":
+  if inpar[1]=="get2col":
     ret=setgae(aut,inpar[1],[sheetid,inpar[2]])
     data=json.loads(ret)
-    print data["response"]["result"]["message"]
+    if data["response"]["result"]["resp"]=="OK":
+      makeRes1(data) 
+  elif inpar[1]=="get2col2":
+    ret=setgae(aut,inpar[1],[sheetid,inpar[2]])
+    data=json.loads(ret)
+    if data["response"]["result"]["resp"]=="OK":
+         makeRes1(data)
   elif inpar[1]=="setTest1":
     ret=setgae(aut,inpar[1],[sheetid,inpar[2],inpar[3],inpar[4],inpar[5],inpar[6],inpar[7]])
     data=json.loads(ret)

@@ -55,6 +55,8 @@ share.pMap=function(p){
      return "G57";
   }else if(p=="臨時支出"){
      return "G58";
+  }else if(p=="食費生活費"){
+	  return "G51";
   }else{
      return null;
   }
